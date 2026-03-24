@@ -798,6 +798,11 @@
     }
 
   </style>
+
+  <!-- Firebase SDK — loaded before page scripts so firebase is available -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 </head>
 <body>
 
@@ -1079,15 +1084,19 @@ function applyWatermark(userImg) {
   let db, storage;
   function initFirebase() {
     if (typeof firebase === 'undefined') {
-      console.error('Firebase SDK not loaded.');
+      console.error('❌ Firebase SDK not loaded — check network/CSP.');
       return;
     }
-    if (!firebase.apps.length) {
-      firebase.initializeApp(FIREBASE_CONFIG);
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(FIREBASE_CONFIG);
+      }
+      db      = firebase.firestore();
+      storage = firebase.storage();
+      console.log('✅ Firebase initialised');
+    } catch (e) {
+      console.error('❌ Firebase init failed:', e);
     }
-    db      = firebase.firestore();
-    storage = firebase.storage();
-    console.log('✅ Firebase initialised');
   }
 
   // ---- UI helpers ----
@@ -1183,22 +1192,10 @@ function applyWatermark(userImg) {
     }
   }
 
-  // ---- load Firebase SDK then init ----
-  (function loadFirebaseSDK() {
-    const sdks = [
-      'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
-      'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js',
-      'https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js'
-    ];
-    let loaded = 0;
-    sdks.forEach(src => {
-      const s = document.createElement('script');
-      s.src = src;
-      s.onload = () => { if (++loaded === sdks.length) initFirebase(); };
-      s.onerror = () => console.error('Failed to load Firebase SDK:', src);
-      document.head.appendChild(s);
-    });
-  })();
+  // ---- init Firebase once window is fully loaded ----
+  window.addEventListener('load', () => {
+    initFirebase();
+  });
 
   // ==================== END FIREBASE BACKEND ====================
 
