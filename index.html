@@ -799,7 +799,7 @@
 
   </style>
 
-  <!-- Firebase SDK — loaded before page scripts so firebase is available -->
+  <!-- Firebase SDK loaded before page scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
@@ -1074,7 +1074,7 @@ function applyWatermark(userImg) {
   apiKey: "AIzaSyBUM0jAyeXCeTjdWEHTijY6GkS_ubx2uIU",
   authDomain: "resq-4eacc.firebaseapp.com",
   projectId: "resq-4eacc",
-  storageBucket: "resq-4eacc.firebasestorage.app",
+  storageBucket: "resq-4eacc.appspot.com",
   messagingSenderId: "674750083225",
   appId: "1:674750083225:web:36fc3ee770037a6fc74808",
   measurementId: "G-MVG0QYNJ8Y"
@@ -1084,19 +1084,15 @@ function applyWatermark(userImg) {
   let db, storage;
   function initFirebase() {
     if (typeof firebase === 'undefined') {
-      console.error('❌ Firebase SDK not loaded — check network/CSP.');
+      console.error('Firebase SDK not loaded.');
       return;
     }
-    try {
-      if (!firebase.apps.length) {
-        firebase.initializeApp(FIREBASE_CONFIG);
-      }
-      db      = firebase.firestore();
-      storage = firebase.storage();
-      console.log('✅ Firebase initialised');
-    } catch (e) {
-      console.error('❌ Firebase init failed:', e);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(FIREBASE_CONFIG);
     }
+    db      = firebase.firestore();
+    storage = firebase.storage();
+    console.log('✅ Firebase initialised');
   }
 
   // ---- UI helpers ----
@@ -1161,19 +1157,30 @@ function applyWatermark(userImg) {
 
     setSubmitLoading(true);
 
-    try {
-      // 1️⃣  Convert base64 data URL → Blob
-      const res   = await fetch(photoDataURL);
-      const blob  = await res.blob();
+    // Safety timeout: surface an error if nothing resolves in 15s
+    const timeout = setTimeout(() => {
+      showErrorToast('Upload timed out. Check your internet and try again.');
+      setSubmitLoading(false);
+    }, 15000);
 
-      // 2️⃣  Upload photo to Firebase Storage
+    try {
+      // 1. Convert base64 data URL to Blob
+      console.log('Converting photo...');
+      const res  = await fetch(photoDataURL);
+      const blob = await res.blob();
+      console.log('Photo converted, size:', blob.size, 'bytes');
+
+      // 2. Upload photo to Firebase Storage
+      console.log('Uploading to Storage...');
       const timestamp  = Date.now();
       const filename   = `reports/${phone}_${timestamp}.jpg`;
       const storageRef = storage.ref(filename);
-      const uploadTask = await storageRef.put(blob, { contentType: 'image/jpeg' });
-      const photoURL   = await uploadTask.ref.getDownloadURL();
+      const uploadSnap = await storageRef.put(blob, { contentType: 'image/jpeg' });
+      const photoURL   = await uploadSnap.ref.getDownloadURL();
+      console.log('Storage upload done:', photoURL);
 
-      // 3️⃣  Save report document to Firestore
+      // 3. Save report document to Firestore
+      console.log('Saving to Firestore...');
       await db.collection('reports').add({
         name,
         phone,
@@ -1181,21 +1188,28 @@ function applyWatermark(userImg) {
         status:    'pending',
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
+      console.log('Firestore save done');
 
-      // 4️⃣  Success
+      clearTimeout(timeout);
       showSuccessState();
 
     } catch (err) {
-      console.error('Submission error:', err);
-      showErrorToast('Submission failed. Please try again.');
+      clearTimeout(timeout);
+      console.error('Submission error:', err.code, err.message);
+
+      let msg = 'Submission failed. Please try again.';
+      if (err.code === 'storage/unauthorized')  msg = 'Storage permission denied. Check Firebase Storage rules.';
+      if (err.code === 'permission-denied')      msg = 'Firestore permission denied. Check Firestore rules.';
+      if (err.code === 'storage/unknown')        msg = 'Storage error. The bucket name may be wrong.';
+      if (err.message && err.message.includes('fetch')) msg = 'Network error. Check your connection.';
+
+      showErrorToast(msg);
       setSubmitLoading(false);
     }
   }
 
-  // ---- init Firebase once window is fully loaded ----
-  window.addEventListener('load', () => {
-    initFirebase();
-  });
+  // Firebase SDKs are loaded in <head> — init after window load
+  window.addEventListener('load', () => { initFirebase(); });
 
   // ==================== END FIREBASE BACKEND ====================
 
