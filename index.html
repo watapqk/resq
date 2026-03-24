@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResQPaws</title>
+  <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1a0ym6RHjbaOGZy7L8gMRFafjLqbJOimX&sz=w512">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=mrIsMgeVTaezXrawfsnXyM7lO78CcLM62WvIk1HE8rYSSFNdqVgs9FOWfRvQysKAkqeTpEuuD4eUCNa_HoH3Z0NX936mZG2tdEi0IiC_pYZS_pY2pJJ8iWb4_dOoCwOMCCFkeLryYYhyhliS9yH51qGcLpjE_SPv9Uq0sHiaF6M0pwBkEpEkcwqPC80pTOAfrng59CzvYjLYULykhD6kQU7Ofz2yiMEgY-tAgtmcNtyt-PcjsFqRYaCzRxJlAZWHVFzCXJrjVD14WIiegkSuTg" charset="UTF-8"></script><style>
+    :root {
+      --primary-orange: #FF4500;
+      --primary-red: #FF5722;
+      --secondary-purple: #4B0082;
+      --accent-blue: #2C3E8F;
+      --dark-bg: #0F1419;
+      --light-bg: #F8F9FA;
+      --text-dark: #1A1A1A;
+      --text-light: #666666;
+      --text-white: #FFFFFF;
+      --border-color: #E0E0E0;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.2);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ==================== HEADER & NAVIGATION ==================== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    header.scrolled {
+      box-shadow: var(--shadow-md);
+      background: rgba(255, 255, 255, 0.99);
+    }
+
+    nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--primary-orange);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-orange), var(--secondary-purple));
+      transition: width var(--transition);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-button {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-red));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ==================== HERO SECTION ==================== */
+    .hero {
+      margin-top: 60px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1f2e 50%, var(--accent-blue) 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 2rem;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      text-align: center;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      animation: slideInDown 0.8s ease-out;
+      letter-spacing: -1.5px;
+    }
+
+    .hero .tagline {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+      animation: slideInUp 0.8s ease-out 0.2s both;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: slideInUp 0.8s ease-out 0.4s both;
+    }
+
+    .btn-primary {
+      padding: 1.2rem 3rem;
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-red));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
+      display: inline-block;
+    }
+
+    .btn-secondary {
+      padding: 1.2rem 3rem;
+      background: linear-gradient(135deg, var(--secondary-purple), var(--primary-red));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(119, 13, 206, 0.3);
+      display: inline-block;
+
+    }
+    .btn-tertiary {
+      padding: 1.2rem 3rem;
+      background: linear-gradient(135deg, var(--secondary-purple), var(--accent-blue));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(119, 13, 206, 0.3);
+      display: inline-block;
+
+    }
+
+
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(255, 69, 0, 0.4);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(158, 12, 225, 0.4);
+    }
+    .btn-tertiary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(158, 12, 225, 0.4);
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ==================== SECTIONS ==================== */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, var(--primary-orange), var(--secondary-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-title s {
+      background: linear-gradient(135deg, var(--text-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-orange), var(--secondary-purple));
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 1.15rem;
+      margin-bottom: 3.5rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+
+    /* ==================== ABOUT SECTION ==================== */
+    .about-section {
+        background: linear-gradient(180deg, #f0f9ff 0%, var(--light-bg) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .about-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%23E0E0E0" stroke-width="1" opacity="0.1"/><circle cx="50" cy="50" r="20" fill="none" stroke="%23E0E0E0" stroke-width="1" opacity="0.1"/></svg>');
+        background-size: 50px 50px;
+        opacity: 0.5;
+        z-index: 0;
+    }
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: stretch;
+        position: relative;
+        z-index: 1;
+    }
+
+    .about-content {
+        background: white;
+        border-radius: 16px;
+        padding: 2.5rem;
+        border-left: 5px solid var(--primary-orange);
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+        height: 100%;
+    }
+
+    .about-content:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-5px);
+    }
+
+    .about-content h3 {
+        font-size: 1.8rem;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .about-content h3 span {
+        color: var(--primary-orange);
+        font-size: 2rem;
+    }
+    .about-content p {
+        color: var(--text-light);
+    }
+
+    /* ==================== HOW IT WORKS SECTION ==================== */
+    .how-it-works-section {
+        background: var(--dark-bg);
+        color: var(--text-white);
+    }
+    .how-it-works-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .how-it-works-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        text-align: center;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .how-it-works-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-5px);
+        border-color: var(--primary-orange);
+    }
+    
+    .how-it-works-card:hover::before {
+        opacity: 1;
+    }
+    
+    .how-it-works-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="none" stroke="%23FF4500" stroke-width="1" d="M 10 10 L 90 10 L 90 90 L 10 90 Z" opacity="0.1"/></svg>');
+        background-size: 50px 50px;
+        opacity: 0;
+        z-index: 0;
+        transition: var(--transition);
+    }
+    
+    .how-it-works-card > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .how-it-works-card .step-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-orange);
+        margin-bottom: 1rem;
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 69, 0, 0.1);
+        border-radius: 12px;
+        transition: var(--transition);
+    }
+    
+    .how-it-works-card:hover .step-number {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .how-it-works-card h3 {
+        color: var(--text-dark);
+        font-size: 1.4rem;
+        transition: var(--transition);
+    }
+    
+    .how-it-works-card:hover h3 {
+        color: white;
+    }
+    
+    .how-it-works-card p {
+        color: var(--text-light);
+        transition: var(--transition);
+    }
+    
+    .how-it-works-card:hover p {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ==================== FEATURES SECTION ==================== */
+    .features-section {
+        background: var(--light-bg);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2.5rem;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .feature-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(circle, var(--primary-orange) 0%, transparent 70%);
+        opacity: 0.05;
+        z-index: 0;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-orange);
+    }
+
+    .feature-card h3 {
+        font-size: 1.4rem;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .feature-card h3 span {
+        color: var(--secondary-purple);
+        font-size: 1.8rem;
+    }
+    .feature-card:hover h3 span {
+        color: var(--primary-orange);
+    }
+    .feature-card p {
+        color: var(--text-light);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ==================== DEMO SECTION ==================== */
+    .demo-section {
+        background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-purple) 100%);
+        color: white;
+        padding: 5rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        filter: grayscale(100%);
+        opacity: 0.8;
+        pointer-events: none;
+    }
+    .demo-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%23FFFFFF" stroke-width="1" opacity="0.1"/></svg>');
+        background-size: 100px 100px;
+        opacity: 0.5;
+        z-index: 0;
+    }
+    .demo-section > * {
+        position: relative;
+        z-index: 1;
+    }
+    .demo-mockup {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(5px);
+        font-style: italic;
+    }
+    .demo-mockup p {
+        color: rgba(255, 255, 255, 0.8);
+    }
+    .demo-section .btn-primary {
+        background: white;
+        color: var(--primary-orange);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+  .demo-section .btn-secondary {
+        background: white;
+        color: var(--secondary-purple);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .demo-section .btn-tertiary {
+        background: white;
+        color: var(--secondary-purple);
+        box-shadow: 0 10px 30px rgba(111, 29, 225, 0.3);
+    }
+    .demo-section .btn-primary:hover {
+        color: white;
+        background: var(--primary-orange);
+    }
+
+    /* ==================== VISION SECTION ==================== */
+    .vision-section {
+        text-align: center;
+        background: var(--light-bg);
+        padding: 5rem 2rem;
+    }
+    .vision-section .section-title::after {
+        background: linear-gradient(90deg, var(--secondary-purple), var(--primary-orange));
+    }
+
+    /* ==================== FOOTER ==================== */
+    footer {
+        background: var(--dark-bg);
+        color: white;
+        padding: 4rem 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-section h4 {
+        color: var(--primary-orange);
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+    
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .footer-section a:hover {
+        color: var(--primary-orange);
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 2rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* ==================== RESPONSIVE DESIGN ==================== */
+    @media (max-width: 768px) {
+        .about-grid {
+            grid-template-columns: 1fr;
+        }
+        .how-it-works-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    /* ==================== EDUCATIONAL ELEMENTS ==================== */
+    .educational-icon {
+        font-size: 1.5rem;
+        margin-right: 0.5rem;
+    }
+
+    /* ==================== HERO FORM ==================== */
+    .hero-form-container {
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      animation: slideInUp 0.8s ease-out 0.4s both;
+    }
+
+    .form-step {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-step.active {
+      display: flex;
+    }
+
+    .form-step-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.25rem;
+    }
+
+    .form-step h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 14px;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: var(--transition);
+      backdrop-filter: blur(6px);
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .form-input:focus {
+      border-color: var(--primary-orange);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 4px rgba(255, 69, 0, 0.15);
+    }
+
+    .form-input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px rgba(30, 30, 50, 0.9) inset;
+      -webkit-text-fill-color: white;
+    }
+
+    .form-next-btn {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-red));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(255, 69, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .form-next-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 69, 0, 0.45);
+    }
+
+    .form-next-btn svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s ease;
+    }
+
+    .form-next-btn:hover svg {
+      transform: translateX(3px);
+    }
+
+    .form-progress {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      transition: var(--transition);
+    }
+
+    .form-progress-dot.active {
+      background: var(--primary-orange);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .form-error {
+      color: #ff6b6b;
+      font-size: 0.8rem;
+      margin-top: -0.4rem;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- HEADER & NAVIGATION -->
+<header id="header">
+  <nav>
+    <div class="logo-container">
+      <img 
+        src="https://drive.google.com/thumbnail?id=1a0ym6RHjbaOGZy7L8gMRFafjLqbJOimX&sz=w512" 
+        alt="ResQPaws Logo" 
+        class="logo-img"
+      />
+    </div>
+    <ul>
+      <li><a href="https://www.instagram.com/resq_paws.india/" target="_blank"><button class="btn-tertiary">Instagram</button></a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Rescue Every Soul Quickly.</h1>
+    <p class="tagline">We’re on a Mission to Rescue Every Soul Quickly</p>
+    <div class="hero-buttons">
+    </div>
+
+    <div class="hero-form-container">
+      <!-- Progress dots -->
+      <div class="form-progress">
+        <div class="form-progress-dot active" id="dot-1"></div>
+        <div class="form-progress-dot" id="dot-2"></div>
+        <div class="form-progress-dot" id="dot-3"></div>
+      </div>
+
+      <!-- Step 1: Name & Phone -->
+      <div class="form-step active" id="step-1">
+        <div class="form-step-label">Step 1 of 3</div>
+        <h3>Tell us about yourself 🐾</h3>
+        <div>
+          <input class="form-input" type="text" id="input-name" placeholder="Your Name" autocomplete="name" />
+          <div class="form-error" id="error-name">Please enter your name.</div>
+        </div>
+        <div>
+          <input class="form-input" type="tel" id="input-phone" placeholder="Phone Number (10 digits)" autocomplete="tel" maxlength="10" inputmode="numeric" />
+          <div class="form-error" id="error-phone">Please enter a valid 10-digit phone number.</div>
+        </div>
+        <button class="form-next-btn" onclick="goToStep2()">
+          Next
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Step 2: Take a Photo -->
+      <div class="form-step" id="step-2">
+        <div class="form-step-label">Step 2 of 3</div>
+        <h3>Take a Photo 📸</h3>
+        <p style="color: rgba(255,255,255,0.55); font-size: 0.88rem; margin-bottom: 0.5rem;">We'll add a ResQPaws watermark to your photo.</p>
+
+        <!-- Hidden file input for camera -->
+        <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoCapture(event)" />
+
+        <!-- Camera trigger button -->
+        <button class="form-next-btn" id="open-camera-btn" onclick="document.getElementById('camera-input').click()" style="background: linear-gradient(135deg, #4B0082, #2C3E8F);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          Open Camera
+        </button>
+
+        <!-- Hidden canvas for watermark processing -->
+        <canvas id="watermark-canvas" style="display:none"></canvas>
+      </div>
+
+      <!-- Step 3: Confirm Photo -->
+      <div class="form-step" id="step-3">
+        <div class="form-step-label">Step 3 of 3</div>
+        <h3>Confirm Your Photo ✅</h3>
+        <div style="border-radius: 14px; overflow: hidden; border: 2px solid rgba(255,255,255,0.2); margin-bottom: 0.5rem;">
+          <img id="photo-preview" src="" alt="Your photo" style="width:100%; display:block; border-radius: 12px;" />
+        </div>
+        <div style="display:flex; gap:0.75rem; flex-wrap: wrap;">
+          <button class="form-next-btn" onclick="retakePhoto()" style="background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.25); flex:1;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+            Retake
+          </button>
+          <button id="submit-btn" class="form-next-btn" onclick="handleSubmit()" style="flex:2;">
+            Confirm &amp; Submit
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO SECTION -->
+<section class="demo-section" id="demo">
+    <h2 class="section-title" style="color: white;">Visit <s>ResQPaws</s> Store</h2>
+    <div class="demo-mockup">
+        <p style="font-size: 18px;">The Store is currently under maintenance. Apologies for the inconvenience.</p>
+    </div>
+    <button class="btn-primary">Visit Our Store</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>Socials</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/resq_paws.india/" target="_blank">Instagram</a></li>
+        <li><a href="https://www.linkedin.com/company/resq-paws/" target="_blank">LinkedIn</a></li>
+        <li><a><span class="__cf_email__" data-cfemail="087a6d7b7978697f7b2661666c6169486f65696164266b6765">[email&#160;protected]</span></a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="blog.html" target="_blank">Blog</a></li>
+        <li><a href="https://www.instagram.com/resq_paws.india/">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 ResQPaws. All rights reserved.</p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ==================== FORM LOGIC ====================
+
+  const LOGO_URL = 'watermark.png';
+
+  // Only allow numeric input for phone
+  document.addEventListener('DOMContentLoaded', () => {
+    const phoneInput = document.getElementById('input-phone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', () => {
+        phoneInput.value = phoneInput.value.replace(/\D/g, '').slice(0, 10);
+      });
+    }
+  });
+
+  function goToStep2() {
+    const name  = document.getElementById('input-name').value.trim();
+    const phone = document.getElementById('input-phone').value.trim();
+    const nameErr  = document.getElementById('error-name');
+    const phoneErr = document.getElementById('error-phone');
+    let valid = true;
+
+    nameErr.style.display  = (!name) ? 'block' : 'none';
+    if (!name) valid = false;
+
+    // Exactly 10 digits
+    if (!/^\d{10}$/.test(phone)) {
+      phoneErr.style.display = 'block';
+      valid = false;
+    } else {
+      phoneErr.style.display = 'none';
+    }
+
+    if (!valid) return;
+
+    showStep('step-2', 'dot-2');
+  }
+
+  function showStep(stepId, dotId) {
+    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.form-progress-dot').forEach(d => d.classList.remove('active'));
+    document.getElementById(stepId).classList.add('active');
+    document.getElementById(dotId).classList.add('active');
+  }
+
+  function retakePhoto() {
+    // Reset camera input so the same file can be re-selected
+    document.getElementById('camera-input').value = '';
+    showStep('step-2', 'dot-2');
+  }
+
+  function handlePhotoCapture(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const userImg = new Image();
+      userImg.onload = function() {
+        applyWatermark(userImg);
+      };
+      userImg.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  
+    // Fallback watermark (simple text if logo fails)
+    function drawFallbackWatermark(ctx, canvas) {
+      ctx.globalAlpha = 0.5;
+      ctx.fillStyle = 'white';
+      ctx.font = `${Math.round(canvas.width * 0.04)}px Poppins`;
+      ctx.textAlign = 'right';
+      ctx.fillText('ResQPaws', canvas.width - 20, canvas.height - 20);
+      ctx.globalAlpha = 1.0;
+    }
+
+function applyWatermark(userImg) {
+    const canvas = document.getElementById('watermark-canvas');
+    const ctx    = canvas.getContext('2d');
+
+    // Match canvas size to photo
+    canvas.width  = userImg.width;
+    canvas.height = userImg.height;
+
+    // Draw the user's photo
+    ctx.drawImage(userImg, 0, 0);
+
+    // Load the ResQPaws logo and stamp it bottom-right
+    const logo = new Image();
+    logo.crossOrigin = 'anonymous';
+    logo.onload = function() {
+      const padding   = Math.round(canvas.width * 0.03);
+      const logoW     = Math.round(canvas.width * 0.22);
+      const logoH     = Math.round(logo.naturalHeight * (logoW / logo.naturalWidth));
+      const x = canvas.width  - logoW - padding;
+      const y = canvas.height - logoH - padding;
+
+      // Semi-transparent backing so logo is visible on any background
+      ctx.globalAlpha = 0.85;
+      ctx.drawImage(logo, x, y, logoW, logoH);
+      ctx.globalAlpha = 1.0;
+
+      // Push watermarked image to the confirm preview
+      const dataURL = canvas.toDataURL('image/jpeg', 0.92);
+      document.getElementById('photo-preview').src = dataURL;
+      showStep('step-3', 'dot-3');
+    };
+    logo.onerror = function() {
+      // Fallback watermark if logo fails
+      drawFallbackWatermark(ctx, canvas);
+      const dataURL = canvas.toDataURL('image/jpeg', 0.92);
+      document.getElementById('photo-preview').src = dataURL;
+      showStep('step-3', 'dot-3');
+    };
+    logo.src = LOGO_URL;
+  }
+
+  // ==================== FIREBASE BACKEND ====================
+  // Firebase is loaded via CDN below. Configuration is read from
+  // the FIREBASE_CONFIG object — fill in your project values there.
+
+  const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBUM0jAyeXCeTjdWEHTijY6GkS_ubx2uIU",
+  authDomain: "resq-4eacc.firebaseapp.com",
+  projectId: "resq-4eacc",
+  storageBucket: "resq-4eacc.firebasestorage.app",
+  messagingSenderId: "674750083225",
+  appId: "1:674750083225:web:36fc3ee770037a6fc74808",
+  measurementId: "G-MVG0QYNJ8Y"
+  };
+
+  // ---- initialise Firebase (runs after SDK scripts load) ----
+  let db, storage;
+  function initFirebase() {
+    if (typeof firebase === 'undefined') {
+      console.error('Firebase SDK not loaded.');
+      return;
+    }
+    if (!firebase.apps.length) {
+      firebase.initializeApp(FIREBASE_CONFIG);
+    }
+    db      = firebase.firestore();
+    storage = firebase.storage();
+    console.log('✅ Firebase initialised');
+  }
+
+  // ---- UI helpers ----
+  function setSubmitLoading(loading) {
+    const btn = document.getElementById('submit-btn');
+    if (!btn) return;
+    btn.disabled = loading;
+    btn.innerHTML = loading
+      ? `<svg style="width:18px;height:18px;animation:spin 1s linear infinite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity=".25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg> Submitting…`
+      : `Confirm &amp; Submit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>`;
+  }
+
+  function showSuccessState() {
+    const formCard = document.querySelector('.hero-form-container');
+    if (!formCard) return;
+    formCard.innerHTML = `
+      <div style="text-align:center;padding:2rem 1rem;animation:slideInUp 0.6s ease-out both;">
+        <div style="font-size:3.5rem;margin-bottom:1rem;">🐾</div>
+        <h3 style="color:white;font-size:1.4rem;margin-bottom:0.75rem;">Report Submitted!</h3>
+        <p style="color:rgba(255,255,255,0.65);font-size:0.95rem;line-height:1.7;">
+          Thank you for helping us rescue animals.<br>
+          Our team will follow up on your report shortly.
+        </p>
+        <button class="form-next-btn" style="margin-top:1.5rem;width:100%;" onclick="location.reload()">
+          Submit Another Report
+        </button>
+      </div>`;
+  }
+
+  function showErrorToast(msg) {
+    let toast = document.getElementById('rq-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'rq-toast';
+      toast.style.cssText = `
+        position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
+        background:#1a1a2e;color:#ff6b6b;border:1.5px solid #ff6b6b;
+        padding:0.85rem 1.5rem;border-radius:12px;font-size:0.9rem;
+        font-family:'Poppins',sans-serif;z-index:9999;
+        box-shadow:0 8px 24px rgba(0,0,0,0.4);`;
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 4000);
+  }
+
+  // ---- core submit logic ----
+  async function handleSubmit() {
+    const name  = document.getElementById('input-name').value.trim();
+    const phone = document.getElementById('input-phone').value.trim();
+    const photoDataURL = document.getElementById('photo-preview').src;
+
+    if (!name || !phone || !photoDataURL) {
+      showErrorToast('Missing data. Please complete all steps.');
+      return;
+    }
+    if (!db || !storage) {
+      showErrorToast('Firebase is not initialised. Check your config.');
+      return;
+    }
+
+    setSubmitLoading(true);
+
+    try {
+      // 1️⃣  Convert base64 data URL → Blob
+      const res   = await fetch(photoDataURL);
+      const blob  = await res.blob();
+
+      // 2️⃣  Upload photo to Firebase Storage
+      const timestamp  = Date.now();
+      const filename   = `reports/${phone}_${timestamp}.jpg`;
+      const storageRef = storage.ref(filename);
+      const uploadTask = await storageRef.put(blob, { contentType: 'image/jpeg' });
+      const photoURL   = await uploadTask.ref.getDownloadURL();
+
+      // 3️⃣  Save report document to Firestore
+      await db.collection('reports').add({
+        name,
+        phone,
+        photoURL,
+        status:    'pending',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      // 4️⃣  Success
+      showSuccessState();
+
+    } catch (err) {
+      console.error('Submission error:', err);
+      showErrorToast('Submission failed. Please try again.');
+      setSubmitLoading(false);
+    }
+  }
+
+  // ---- load Firebase SDK then init ----
+  (function loadFirebaseSDK() {
+    const sdks = [
+      'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
+      'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js',
+      'https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js'
+    ];
+    let loaded = 0;
+    sdks.forEach(src => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = () => { if (++loaded === sdks.length) initFirebase(); };
+      s.onerror = () => console.error('Failed to load Firebase SDK:', src);
+      document.head.appendChild(s);
+    });
+  })();
+
+  // ==================== END FIREBASE BACKEND ====================
+
+  // Smooth header shadow on scroll
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href !== '#') {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
